@@ -8,24 +8,19 @@ class Bird {
     public $song = "chirp";
     public static $flying = "yes";
   
-    public static $instance_count;
     public static $egg_num = 0;
-  
-    public static function create() {
-        $create_bird = new Bird;
-        return $create_bird;
-    }
+    public static $instance_count = 0;
 
 // NOTE: This was the only way I could figure out how to make null coalescing operator work.
     public function can_fly() {
-      $flying_string = static::$flying ?? "is stuck on ground";
-      return $flying_string;
+        $flying_string = static::$flying ?? "is stuck on ground";
+        return $flying_string;
     }
   
 //  Using Ternary Operator
 //    public function can_fly() {
-//      $flying_string = (static::$flying == "yes") ? "can fly" : "is stuck on ground";
-//      return $flying_string;
+//        $flying_string = (static::$flying == "yes") ? "can fly" : "is stuck on ground";
+//        return $flying_string;
 //    }
 }
 
@@ -41,5 +36,13 @@ class YellowBelliedFlyCatcher extends Bird {
 class Kiwi extends Bird {
     public $name = "kiwi";
     public $diet = "omnivorous";
+// NOTE: Had to set this static property to null for null coalescing operator to work.
     public static $flying = null;
+}
+
+// NOTE: Couldn't make this function work unless I put it outside the Bird class.
+function create() {
+    $create_bird = new Bird;
+    Bird::$instance_count++;
+    return $create_bird;
 }
